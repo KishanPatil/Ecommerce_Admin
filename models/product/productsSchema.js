@@ -19,7 +19,7 @@ const productsSchema=new mongoose.Schema({
         type:Number
     },
     Price:{
-        type:String
+        type:Number
     },
     brand:{
         type: mongoose.Schema.Types.ObjectId,

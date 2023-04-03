@@ -151,6 +151,24 @@ const getCartByCustomerId = async (customerId) => {
   try {
     await connectionDb();
     const cart = await cartmodel.findOne({ customerId }).populate('products.productid');
+  //   const cart = await cartmodel.findOne({ customerId })
+  // .populate({
+  //   path: 'products.productid',
+  //   model: 'products',
+  //   populate: {
+  //     path: 'brand',
+  //     model: 'productBrand'
+  //   }
+  // })
+  // .populate({
+  //   path: 'products.productid',
+  //   model: 'products',
+  //   populate: {
+  //     path: 'category',
+  //     model: 'productCategory'
+  //   }
+  // });
+
     await closeDb();
     return cart;
   } catch (e) {

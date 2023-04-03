@@ -4,11 +4,13 @@
  * @author Meghana Chavanke
  * @author Pradeep Prajapati 
  */
+const emailjs = require('emailjs');
 const { customermodel } = require("../../models/Customer/customerSchema"); // Importing the customer model
 const { customerAddressmodel } = require("../../models/Customer/customerAddressSchema")//importing the customer address mode
 const { connectionDb, closeDb } = require("../../database/connection"); // Importing the database connection functions
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
+
 /**
  * @description get all customers
  * @returns {Promise<Array>} Returns an array of all customers
@@ -157,6 +159,54 @@ const getCustomerByEmail = async (email) => {
   }
   catch (e) { console.log(e) }
 }
+// const otpGeneratorbyemail = async (email) => {
+//   const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
+//   console.log("otp =", otp);
+
+//   // Update OTP and creation time in database
+//   const otpCreatedAt = new Date();
+//   await connectionDb();
+//   await customermodel.updateOne(
+//     { email: email },
+//     { otp: otp, otpCreatedAt: otpCreatedAt }
+//   );
+
+//   // Schedule removal of OTP after 5 minutes
+//   const fiveMinutes = 5 * 60 * 1000;
+//   setTimeout(async () => {
+//     await connectionDb();
+//     await customermodel.updateOne({ email: email }, { $unset: { otp: "", otpCreatedAt: "" } });
+//     console.log("OTP removed");
+//   }, fiveMinutes);
+
+//   // Send OTP to the user's email
+//   const transporter = nodemailer.createTransport({
+//     host: "gmail",
+//     port: 587,
+//     auth: {
+//       user: 'Kishan.Patil@harbingergroup.com',
+//       pass: 'H@rb!ng3R@GR'
+//     }
+//   });
+//   const mailOptions = {
+//     from: 'Kishan.Patil@harbingergroup.com',
+//     to: email,
+//     subject: 'Login OTP',
+//     text: `Your OTP for login is ${otp}`
+//   };
+
+//   transporter.sendMail(mailOptions, function(error, info){
+//     if (error) {
+//       console.log("errr",error);
+//     } else {
+//       console.log('Email sent: ' + info.response);
+//     }
+//   });
+// }
+
+const EmailJSUserID = 'harbinger403@gmail.com';
+emailjs.server.connect({ user: EmailJSUserID });
+
 const otpGeneratorbyemail = async (email) => {
   const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
   console.log("otp =", otp);
@@ -178,29 +228,18 @@ const otpGeneratorbyemail = async (email) => {
   }, fiveMinutes);
 
   // Send OTP to the user's email
-  const transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 587,
-    auth: {
-      user: 'Kishan.Patil@harbingergroup.com',
-      pass: 'H@rb!ng3R@GR'
-    }
-  });
-  const mailOptions = {
-    from: 'Kishan.Patil@harbingergroup.com',
-    to: email,
-    subject: 'Login OTP',
-    text: `Your OTP for login is ${otp}`
+  const templateParams = {
+    to_name: email,
+    message: `Your OTP for login is ${otp}`
   };
 
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log("errr",error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-}
+  emailjs.send('harbinger403@gmail.com', 'template_lh64bi6', templateParams)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+      console.log('FAILED...', error);
+    });
+};
 
 const verifyOtpAndPassword = async (email, otp, password) => {
   try {
