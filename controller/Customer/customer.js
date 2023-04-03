@@ -58,6 +58,7 @@ router.delete("/customers/:id", customerService.deleteCustomerByIdRoute);
  * HTTP Method: DELETE
  */
 router.delete("/customers", customerService.deleteAllRoute);
+
 router.post("/otpgenerate", customerService.otpGeneratorbyemailRoute);
 
 module.exports = router;
