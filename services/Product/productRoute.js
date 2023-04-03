@@ -1,5 +1,8 @@
 /**
+ * @author Kishan Patil
+ * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
+ * @author Pradeep Prajapati 
  */
 // Importing the necessary functions from product.js file
 const {

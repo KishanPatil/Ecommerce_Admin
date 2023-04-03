@@ -1,5 +1,8 @@
 /**
+ * @author Kishan Patil
+ * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
+ * @author Pradeep Prajapati 
  */
 const { paymentsmodel } = require("../../models/Payment/Payment");
 const { connectionDb, closeDb } = require("../../database/connection");

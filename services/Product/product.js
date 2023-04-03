@@ -1,5 +1,8 @@
 /**
+ * @author Kishan Patil
+ * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
+ * @author Pradeep Prajapati 
  */
 const { productsmodel } = require("../../models/product/productsSchema");
 const mongoose = require("mongoose");

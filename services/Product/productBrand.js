@@ -1,5 +1,8 @@
 /**
+ * @author Kishan Patil
+ * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
+ * @author Pradeep Prajapati 
  */
 const { productBrandmodel } = require("../../models/product/productBrandSchema");
 const { connectionDb, closeDb } = require("../../database/connection")

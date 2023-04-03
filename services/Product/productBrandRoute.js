@@ -1,5 +1,8 @@
 /**
+ * @author Kishan Patil
+ * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
+ * @author Pradeep Prajapati 
  */
 const {getAllProductBrands,addProductBrand,updateProductBrandById,deleteProductBrandById,deleteAllProductBrands,getProductBrandById} =require('./productBrand')
 
