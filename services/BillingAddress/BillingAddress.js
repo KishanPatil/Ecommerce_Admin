@@ -1,15 +1,15 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 // Importing the billingAddressmodel from billingAddressSchema file
-const {billingAddressmodel} = require("../../models/BillingAddress/billingAddressSchema");
+const { billingAddressmodel } = require("../../models/BillingAddress/billingAddressSchema");
 
 // Importing connectionDb and closeDb functions from connection file
-const {connectionDb,closeDb}=require("../../database/connection")
+const { connectionDb, closeDb } = require("../../database/connection")
 
 // Function to get all billing addresses
-const getAllAddress = async () => {
-    try{
+const getAllAddresses = async () => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -22,7 +22,7 @@ const getAllAddress = async () => {
         // Return the result
         return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
@@ -30,7 +30,7 @@ const getAllAddress = async () => {
 
 // Function to get a billing address by id
 const getAddressById = async (id) => {
-    try{
+    try {
         // Connect to database
         await connectionDb()
 
@@ -43,15 +43,15 @@ const getAddressById = async (id) => {
         // Return the result
         return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to add a new billing address
-const addAddress= async (city,state,pincode) => {
-    try{
+const addAddress = async (city, state, pincode) => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -66,38 +66,38 @@ const addAddress= async (city,state,pincode) => {
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to update an existing billing address
-const updateAddress= async (id,city,state,pincode) => {
-    try{
+const updateAddressById = async (id, city, state, pincode) => {
+    try {
         // Connect to database
         await connectionDb()
 
         // Update the document with the given id in the billingAddressmodel collection with the new city, state and pincode
-        const result = await billingAddressmodel.findByIdAndUpdate(id,{city:city,state:state,pincode:pincode});
+        const result = await billingAddressmodel.findByIdAndUpdate(id, { city: city, state: state, pincode: pincode });
 
         // Close the database connection
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to delete a billing address by id
-const deleteAddressById= async (id) => {
-    try{
+const deleteAddressById = async (id) => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -108,17 +108,17 @@ const deleteAddressById= async (id) => {
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to delete all billing addresses
-const deleteAllAddress= async () => {
-    try{
+const deleteAllAddresses = async () => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -129,18 +129,18 @@ const deleteAllAddress= async () => {
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
-      throw new Error(e)
+    catch (e) {
+        throw new Error(e)
     }
-  }
+}
 
-  module.exports ={
-    getAllAddress,
+module.exports = {
+    getAllAddresses,
     getAddressById,
-      addAddress,
-      updateAddress,
-      deleteAddressById,
-      deleteAllAddress
-  }
+    addAddress,
+    updateAddressById,
+    deleteAddressById,
+    deleteAllAddresses
+}

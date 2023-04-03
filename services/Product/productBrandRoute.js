@@ -1,4 +1,7 @@
-const {getAllProducts,addProductBrand,updateProductBrand,deleteProductBrandById,deleteAllBrand,getProductBrandById} =require('./productBrand')
+/**
+ * @author Meghana Chavanke
+ */
+const {getAllProductBrands,addProductBrand,updateProductBrandById,deleteProductBrandById,deleteAllProductBrands,getProductBrandById} =require('./productBrand')
 
 /**
  * @description get all brand
@@ -6,7 +9,7 @@ const {getAllProducts,addProductBrand,updateProductBrand,deleteProductBrandById,
  */ 
 const  getAllBrandProductsRoute = async(request,response) => {
     try{
-        const result=  await getAllProducts();
+        const result=  await getAllProductBrands();
         console.log(result)
         response.send(result)
     }
@@ -70,7 +73,7 @@ const  updateProductBrandRoute = async(request,response) => {
             console.log(id)
             console.log(BrandName)
             //update data 
-            const result=  await updateProductBrand(id,BrandName,image);
+            const result=  await updateProductBrandById(id,BrandName,image);
             console.log(result)
             response.send(result)
        
@@ -106,11 +109,11 @@ const  deleteProductBrandByIdRoute = async(request,response) => {
  * @param {*} id 
  * @returns 
  */
-const  deleteAllBrandRoute = async(request,response) => {
+const  deleteAllProductBrandsRoute = async(request,response) => {
     
     try{
             //delete All Brand 
-            const result=  await deleteAllBrand();
+            const result=  await deleteAllProductBrands();
             console.log(result)
             response.send(result)
        
@@ -126,5 +129,5 @@ module.exports={
     addProductBrandRoute,
     updateProductBrandRoute,
     deleteProductBrandByIdRoute,
-    deleteAllBrandRoute
+    deleteAllProductBrandsRoute
 }

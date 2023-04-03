@@ -1,12 +1,22 @@
-const {getAllCategory, addProductCategory,getProductCategoryById,updateProductCategory,deleteProductCategoryById,deleteAllCategory} =require('./productCategory')
+/**
+ * @author Meghana Chavanke
+ */
+const {
+    getAllProductCategories, 
+    addProductCategory,
+    getProductCategoryById,
+    updateProductCategoryById,
+    deleteProductCategoryById,
+    getProductCategoryByName,
+    deleteAllProductCategories} =require('./productCategory')
 
 /**
  * @description get all category
  * @returns 
  */
-const  getAllCategoryProductsRoute = async(request,response) => {
+const  getAllProductCategoriesRoute = async(request,response) => {
     try{
-        const result=  await getAllCategory();
+        const result=  await getAllProductCategories();
         console.log(result)
         response.send(result)
     }
@@ -62,7 +72,7 @@ const  addProductCategoryRoute = async(request,response) => {
  * @param {*} request 
  * @param {*} response 
  */
-const  updateProductCategoryRoute = async(request,response) => {
+const  updateProductCategoryByIdRoute = async(request,response) => {
     
     try{
             const {id}=request.params;
@@ -70,7 +80,7 @@ const  updateProductCategoryRoute = async(request,response) => {
             console.log(id)
             console.log(CategoryName)
             //update data 
-            const result=  await updateProductCategory(id,CategoryName,image);
+            const result=  await updateProductCategoryById(id,CategoryName,image);
             console.log(result)
             response.send(result)
        
@@ -99,11 +109,11 @@ const  deleteProductCategoryByIdRoute = async(request,response) => {
     }
 }
 
-const  deleteAllCategoryRoute = async(request,response) => {
+const  deleteAllProductCategoriesRoute = async(request,response) => {
     
     try{
             //delete All Brand 
-            const result=  await deleteAllCategory();
+            const result=  await deleteAllProductCategories();
             console.log(result)
             response.send(result)
        
@@ -118,12 +128,12 @@ const  deleteAllCategoryRoute = async(request,response) => {
  * @description get category by id 
  * @returns 
  */
-const  getCategoryByNameRoute = async(request,response) => {
+const  getProductCategoryByNameRoute = async(request,response) => {
     try{
         //  get id by url or parameter 
         const {CategoryName}=request.params;
         console.log({CategoryName})
-        const result=  await getCategoryByName(CategoryName);
+        const result=  await getProductCategoryByName(CategoryName);
         console.log(result)
         response.send(result)
     }
@@ -133,12 +143,12 @@ const  getCategoryByNameRoute = async(request,response) => {
     }
 }
 module.exports={
-    getAllCategoryProductsRoute,
+    getAllProductCategoriesRoute,
     getProductCategoryByIdRoute,
     addProductCategoryRoute,
-    updateProductCategoryRoute,
+    updateProductCategoryByIdRoute,
     deleteProductCategoryByIdRoute,
-    deleteAllCategoryRoute,
-    getCategoryByNameRoute
+    deleteAllProductCategoriesRoute,
+    getProductCategoryByNameRoute
 }
 

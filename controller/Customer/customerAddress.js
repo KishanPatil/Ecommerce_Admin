@@ -1,35 +1,38 @@
+/**
+ * @author Meghana Chavanke
+ */
 const express = require('express');
 var router = express.Router();
-const service = require('../../services/Customer/customerAddressRoute')
+const customerAddressService = require('../../services/Customer/customerAddressRoute')
 
 /**
  * @description get all Customer list by get method
  */
-router.get("/getAllAddress", service.getAllAddressRoute);
+router.get("/", customerAddressService.getAllAddressRoute);
 
 /**
  * @description get Products Brand by ID
  */
-router.get("/getAddressById/:id", service.getAddressByIdRoute);
+router.get("/:id", customerAddressService.getAddressByIdRoute);
 
 /**
  * @description add Products 
  */
-router.post("/addAddress", service.addAddressRoute);
+router.post("/", customerAddressService.addAddressRoute);
 
 /**
  * @description update product brand by ID
  */
-router.put("/updateAddress/:id", service.updateAddressRoute);
+router.put("/:id", customerAddressService.updateAddressByIdRoute);
 
 /**
  * @description delete Product brand by Id
  */
-router.delete("/deleteAddress/:id", service.deleteAddressByIdRoute);
+router.delete("/:id", customerAddressService.deleteAddressByIdRoute);
 
 /**
  * @description delete all Product brand 
  */
-router.delete("/deleteAllAddress", service.deleteAllAddressRoute);
+router.delete("/", customerAddressService.deleteAllAddressRoute);
 
 module.exports = router

@@ -1,5 +1,5 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 // Importing the cartmodel from cartSchema file
 const { cartmodel } = require("../../models/Cart/cartSchema");
@@ -11,19 +11,19 @@ const { connectionDb, closeDb } = require("../../database/connection")
  * @returns {Promise<Array<Object>>} Array of Cart Objects
  */
 const getAllCart = async () => {
-    try {
-        // Connect to the database
-        await connectionDb();
-        // Use Mongoose's `find` method to retrieve a cart object 
-        const result = await cartmodel.find().populate('products');
-        // Close the database connection
-        await closeDb();
-        // Return the retrieved cart object
-        return result;
-    }
-    catch (e) {
-        throw new Error(e);
-    }
+  try {
+    // Connect to the database
+    await connectionDb();
+    // Use Mongoose's `find` method to retrieve a cart object 
+    const result = await cartmodel.find().populate('products');
+    // Close the database connection
+    await closeDb();
+    // Return the retrieved cart object
+    return result;
+  }
+  catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -32,19 +32,19 @@ const getAllCart = async () => {
  * @returns {Promise<Object>} Cart object
  */
 const getCartById = async (id) => {
-    try {
-        // Connect to the database
-        await connectionDb();
-        // Use Mongoose's `findById` method to retrieve a cart object with the specified `id`
-        const result = await cartmodel.findById(id).populate('products');
-        // Close the database connection
-        await closeDb();
-        // Return the retrieved cart object
-        return result;
-    }
-    catch (e) {
-        throw new Error(e);
-    }
+  try {
+    // Connect to the database
+    await connectionDb();
+    // Use Mongoose's `findById` method to retrieve a cart object with the specified `id`
+    const result = await cartmodel.findById(id).populate('products');
+    // Close the database connection
+    await closeDb();
+    // Return the retrieved cart object
+    return result;
+  }
+  catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -55,35 +55,35 @@ const getCartById = async (id) => {
  */
 
 const addCart = async (customerId, products, res) => {
-    try {
-        // Connect to the database
-        await connectionDb();
+  try {
+    // Connect to the database
+    await connectionDb();
 
-        let cart = await cartmodel.findOne({ customerId });
-        
-        if (!cart) {
-            cart = new cartmodel({ customerId, products });
+    let cart = await cartmodel.findOne({ customerId });
+
+    if (!cart) {
+      cart = new cartmodel({ customerId, products });
+    } else {
+      products.forEach((product) => {
+        const existingProduct = cart.products.find((p) => p.productid.equals(product.productid));
+
+        if (existingProduct) {
+          existingProduct.quantity += product.quantity;
         } else {
-            products.forEach((product) => {
-                const existingProduct = cart.products.find((p) => p.productid.equals(product.productid));
-
-                if (existingProduct) {
-                    existingProduct.quantity += product.quantity;
-                } else {
-                    cart.products.push(product);
-                }
-            });
+          cart.products.push(product);
         }
-
-        await cart.save();
-
-        res.status(200).json({ message: 'Product added to cart successfully!' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error adding product to cart' });
-    } finally {
-        // Close the database connection
-        await mongoose.connection.close();
+      });
     }
+
+    await cart.save();
+
+    res.status(200).json({ message: 'Product added to cart successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding product to cart' });
+  } finally {
+    // Close the database connection
+    await mongoose.connection.close();
+  }
 }
 
 
@@ -96,15 +96,15 @@ const addCart = async (customerId, products, res) => {
  * @returns {Promise<Object>} updated Cart object
  */
 const updateCart = async (id, customerId, products) => {
-    try {
-        await connectionDb();
-        const result = await cartmodel.findByIdAndUpdate(id, { customerId: customerId, products: products });
-        await closeDb();
-        return result;
-    }
-    catch (e) {
-        throw new Error(e);
-    }
+  try {
+    await connectionDb();
+    const result = await cartmodel.findByIdAndUpdate(id, { customerId: customerId, products: products });
+    await closeDb();
+    return result;
+  }
+  catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -113,47 +113,47 @@ const updateCart = async (id, customerId, products) => {
  * @returns {Promise<Object>} deleted Cart object
  */
 const deleteCartById = async (id) => {
-    try {
-        console.log(id);
-        await connectionDb();
-        const result = await cartmodel.findByIdAndDelete(id);
-        await closeDb();
-        return result;
-    }
-    catch (e) {
-        throw new Error(e);
-    }
+  try {
+    console.log(id);
+    await connectionDb();
+    const result = await cartmodel.findByIdAndDelete(id);
+    await closeDb();
+    return result;
+  }
+  catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
  * @description delete all Carts
  * @returns {Promise<Object>} deleted Cart objects
  */
-const deleteAll = async () => {
-    try {
-        await connectionDb();
-        const result = await cartmodel.deleteMany();
-        await closeDb();
-        return result;
-    }
-    catch (e) {
-        throw new Error(e);
-    }
+const deleteAllCart = async () => {
+  try {
+    await connectionDb();
+    const result = await cartmodel.deleteMany();
+    await closeDb();
+    return result;
+  }
+  catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
  * get cart by customer id
  */
 const getCartByCustomerId = async (customerId) => {
-    try {
-      await connectionDb();
-      const cart = await cartmodel.findOne({ customerId }).populate('products.productid');
-      await closeDb();
-      return cart;
-    } catch (e) {
-      throw new Error(e);
-    }
+  try {
+    await connectionDb();
+    const cart = await cartmodel.findOne({ customerId }).populate('products.productid');
+    await closeDb();
+    return cart;
+  } catch (e) {
+    throw new Error(e);
   }
+}
 
 /**
  * remove product from cart by customer id
@@ -161,39 +161,45 @@ const getCartByCustomerId = async (customerId) => {
  * @param {*} productId 
  * @returns 
  */
-  const removeProductFromCart = async (customerId, productId) => {
-    try {
-      await connectionDb();
-      const result = await cartmodel.findOneAndUpdate(
-        { customerId },
-        { $pull: { products: { productid: productId } } },
-        { new: true }
-      );
-      await closeDb();
-      return result;
-    } catch (e) {
-      throw new Error(e);
-    }
+const removeProductFromCart = async (customerId, productId) => {
+  try {
+    await connectionDb();
+    const result = await cartmodel.findOneAndUpdate(
+      { customerId },
+      { $pull: { products: { productid: productId } } },
+      { new: true }
+    );
+    await closeDb();
+    return result;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
-  /**
- * remove product from cart by customer id
- *  * @param {*} customerId 
- * @param {*} productId 
+/**
+* remove product from cart by customer id
+*  * @param {*} customerId 
+* @param {*} productId 
+* @returns 
+*/
+const removeProductFromCart1 = async (customerId) => {
+  try {
+    await connectionDb();
+    const result = await cartmodel.findOneAndDelete(
+      { customerId }
+    );
+    await closeDb();
+    return result;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+/**
+ * 
+ * @param {customerId} 
+ * @param {productId}  
  * @returns 
  */
-  const removeProductFromCart1 = async (customerId) => {
-    try {
-      await connectionDb();
-      const result = await cartmodel.findOneAndDelete(
-        { customerId }
-      );
-      await closeDb();
-      return result;
-    } catch (e) {
-      throw new Error(e);
-    }
-}
-const removeProductFromCartbyproductid = async (customerId, productId) => {
+const removeProductFromCartbyProductId = async (customerId, productId) => {
   try {
     await connectionDb();
     const result = await cartmodel.updateOne(
@@ -208,40 +214,40 @@ const removeProductFromCartbyproductid = async (customerId, productId) => {
 }
 
 const updateCartQuantity = async (customerId, productid, quantity) => {
-    try {
-      // Connect to the database
-      await connectionDb();
-  
-      // Find the cart object with the specified `customerId` and `productId`
-      const cart = await cartmodel.findOneAndUpdate(
-        { customerId, 'products.productid': productid },
-        { $set: { 'products.$.quantity': quantity } },
-        { new: true }
-      ).populate('products');
-  
-      // Close the database connection
-      await closeDb();
-  
-      // Return the updated cart object
-      return cart;
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  
-  
+  try {
+    // Connect to the database
+    await connectionDb();
+
+    // Find the cart object with the specified `customerId` and `productId`
+    const cart = await cartmodel.findOneAndUpdate(
+      { customerId, 'products.productid': productid },
+      { $set: { 'products.$.quantity': quantity } },
+      { new: true }
+    ).populate('products');
+
+    // Close the database connection
+    await closeDb();
+
+    // Return the updated cart object
+    return cart;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+
 
 //exporting functions
 module.exports = {
-    getAllCart,
-    getCartById,
-    addCart,
-    updateCart,
-    deleteCartById,
-    deleteAll,
-    getCartByCustomerId,
-    removeProductFromCart,
+  getAllCart,
+  getCartById,
+  addCart,
+  updateCart,
+  deleteCartById,
+  deleteAllCart,
+  getCartByCustomerId,
+  removeProductFromCart,
   updateCartQuantity,
   removeProductFromCart1,
-  removeProductFromCartbyproductid
+  removeProductFromCartbyProductId
 }

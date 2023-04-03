@@ -1,5 +1,17 @@
+/**
+ * @author Meghana Chavanke
+ */
 // Importing the necessary functions from product.js file
-const { getAllProducts, getProductById,searchProductsByName, getProductByCategoryId,getProductByBrandId, addProduct, updateProduct, deleteProductById, deleteAll } = require('./product');
+const {
+    getAllProducts,
+    getProductById,
+    searchProductsByName,
+    getProductByCategoryId,
+    getProductByBrandId,
+    addProduct,
+    updateProductById,
+    deleteProductById,
+    deleteAllProducts } = require('./product');
 
 // Route to get all the products
 const getAllProductsRoute = async (request, response) => {
@@ -78,7 +90,7 @@ const addProductRoute = async (request, response) => {
         const { category } = request.body;
         const { image } = request.body;
         console.log({ Name, Description, Quantity, Price, brand, category });
-        const result = await addProduct(Name, Description, image,Quantity, Price, brand, category);
+        const result = await addProduct(Name, Description, image, Quantity, Price, brand, category);
         console.log(result);
         response.send(result);
     } catch (e) {
@@ -88,7 +100,7 @@ const addProductRoute = async (request, response) => {
 };
 
 // Route to update an existing product
-const updateProductRoute = async (request, response) => {
+const updateProductByIdRoute = async (request, response) => {
     try {
         const { id } = request.params;
         const { Name } = request.body;
@@ -99,7 +111,7 @@ const updateProductRoute = async (request, response) => {
         const { brand } = request.body;
         const { category } = request.body;
         console.log(id);
-        const result = await updateProduct(id, Name, Description, image,Quantity, Price, brand, category);
+        const result = await updateProductById(id, Name, Description, image, Quantity, Price, brand, category);
         console.log(result);
         response.send(result);
     } catch (e) {
@@ -123,9 +135,9 @@ const deleteProductByIdRoute = async (request, response) => {
 };
 
 // Route to delete all the products
-const deleteAllRoute = async (request, response) => {
+const deleteAllProductsRoute = async (request, response) => {
     try {
-        const result = await deleteAll();
+        const result = await deleteAllProducts();
         console.log(result);
         response.send(result);
     } catch (e) {
@@ -142,7 +154,7 @@ module.exports = {
     getProductByCategoryIdRoute,
     getProductByBrandIdRoute,
     addProductRoute,
-    updateProductRoute,
+    updateProductByIdRoute,
     deleteProductByIdRoute,
-    deleteAllRoute
+    deleteAllProductsRoute
 };

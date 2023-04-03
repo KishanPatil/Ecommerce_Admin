@@ -1,8 +1,8 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 const { customermodel } = require("../../models/Customer/customerSchema"); // Importing the customer model
-const {customerAddressmodel} = require("../../models/Customer/customerAddressSchema")//importing the customer address mode
+const { customerAddressmodel } = require("../../models/Customer/customerAddressSchema")//importing the customer address mode
 const { connectionDb, closeDb } = require("../../database/connection"); // Importing the database connection functions
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
@@ -10,7 +10,7 @@ const nodemailer = require('nodemailer');
  * @description get all customers
  * @returns {Promise<Array>} Returns an array of all customers
  */
-const getAllCustomer = async () => {
+const getAllCustomers = async () => {
   try {
     await connectionDb(); // Connecting to the database
     const result = await customermodel.find() // Finding all customers
@@ -44,10 +44,12 @@ const getCustomerById = async (id) => {
  * @param {string} phone - The phone number of the customer
  * @param {string} email - The email address of the customer
  * @param {string} password - The password of the customer
- * @param {string} address - The address of the customer
+ * @param {string} city - The city of the customer
+ * @param {string} state - The state of the customer
+ * @param {string} pincode - The pincode of the customer
  * @returns {Promise<Object>} Returns the new customer object
  */
-const addCustomer = async (fname, lname, phone, email, password, city,state,pincode) => {
+const addCustomer = async (fname, lname, phone, email, password, city, state, pincode) => {
   try {
     await connectionDb(); // Connecting to the database
     const result = await customermodel.create({
@@ -75,10 +77,12 @@ const addCustomer = async (fname, lname, phone, email, password, city,state,pinc
  * @param {string} phone - The updated phone number of the customer
  * @param {string} email - The updated email address of the customer
  * @param {string} password - The updated password of the customer
- * @param {string} address - The updated address of the customer
+ * @param {string} city - The city of the customer
+ * @param {string} state - The state of the customer
+ * @param {string} pincode - The pincode of the customer
  * @returns {Promise<Object>} Returns the updated customer object
  */
-const updateCustomer = async (
+const updateCustomerById = async (
   id,
   fname,
   lname,
@@ -93,7 +97,7 @@ const updateCustomer = async (
     await connectionDb(); // Connecting to the database
     const result = await customermodel.findByIdAndUpdate(
       id,
-      { fname, lname, phone, email, password, city ,state, pincode },
+      { fname, lname, phone, email, password, city, state, pincode },
       { new: true }
     ); // Updating the customer with the provided details
     await closeDb(); // Closing the database connection
@@ -103,115 +107,53 @@ const updateCustomer = async (
   }
 };
 
-// const updateCustomer = async (
-//   id,
-//   fname,
-//   lname,
-//   phone,
-//   email,
-//   password,
-//   city,
-//   state,
-//   pincode
-// ) => {
-//   try {
-//     await connectionDb(); // Connecting to the database
-//     const result = await customermodel.findByIdAndUpdate(
-//       id,
-//       { fname, lname, phone, email, password, address: { city, state, pincode } },
-//       { new: true }
-//     ); // Updating the customer with the provided details
-//     await closeDb(); // Closing the database connection
-//     return result;
-//   } catch (e) {
-//     throw new Error(e);
-//   }
-// };
-
 
 /**
  * @description delete a customer by ID
  * @param {string} id - The ID of the customer to delete
  * @returns {Promise<Object>} Returns the deleted customer object
  */
-const deleteCustomerById= async (id) => {
-  try{
-      console.log(id);
-      // establish database connection
-        await connectionDb()
-        // delete customer by id
-        const result = await customermodel.findByIdAndDelete(id);
-        // close database connection
-        await closeDb()
-        return result   
-      }
-  catch(e){
+const deleteCustomerById = async (id) => {
+  try {
+    console.log(id);
+    // establish database connection
+    await connectionDb()
+    // delete customer by id
+    const result = await customermodel.findByIdAndDelete(id);
+    // close database connection
+    await closeDb()
+    return result
+  }
+  catch (e) {
     throw new Error(e)
   }
 }
 
-const deleteAllCustomer= async () => {
-  try{
-      // establish database connection
-        await connectionDb()
-      //   delete all customers
-        const result = await customermodel.deleteMany();
-        // close database connection
-        await closeDb()
-        return result   
-      }
-  catch(e){
+const deleteAllCustomers = async () => {
+  try {
+    // establish database connection
+    await connectionDb()
+    //   delete all customers
+    const result = await customermodel.deleteMany();
+    // close database connection
+    await closeDb()
+    return result
+  }
+  catch (e) {
     throw new Error(e)
   }
 }
 
-// const getCustomerByEmail = async (email) => {
-//   try {
-//     await connectionDb();
-//     const result = await customermodel.findOne({ email: email })
-//      // close database connection
-//      await closeDb()
-//     return result
-//   }
-//   catch (e) { console.log(e) }
-// }
-
-// const otpGeneratorfun = async () => {
-//   const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
-//   // Send OTP to the user's email
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: 'your-email@example.com',
-//     pass: 'your-email-password'
-//   }
-// });
-// const mailOptions = {
-//   from: 'your-email@example.com',
-//   to: 'user-email@example.com',
-//   subject: 'Login OTP',
-//   text: `Your OTP for login is ${otp}`
-//   };
-
-//   transporter.sendMail(mailOptions, function(error, info){
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       console.log('Email sent: ' + info.response);
-//     }
-//   });
-// }
 const getCustomerByEmail = async (email) => {
   try {
     await connectionDb();
     const result = await customermodel.findOne({ email: email })
-     // close database connection
-     await closeDb()
+    // close database connection
+    await closeDb()
     return result
   }
   catch (e) { console.log(e) }
 }
-
 const otpGeneratorbyemail = async (email) => {
   const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
   console.log("otp =", otp);
@@ -276,13 +218,13 @@ const verifyOtpAndPassword = async (email, otp, password) => {
 }
 
 //exporting functions
- module.exports =  {
-                    getAllCustomer,
-                    getCustomerById,
-                    getCustomerByEmail,
-                    addCustomer,
-                    updateCustomer,
-                    deleteCustomerById,
-                    deleteAllCustomer,
-                    otpGeneratorbyemail
-                  }
+module.exports = {
+  getAllCustomers,
+  getCustomerById,
+  getCustomerByEmail,
+  addCustomer,
+  updateCustomerById,
+  deleteCustomerById,
+  deleteAllCustomers,
+  otpGeneratorbyemail
+}

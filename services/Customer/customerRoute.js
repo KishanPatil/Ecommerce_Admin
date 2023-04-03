@@ -1,11 +1,13 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
-const { getAllCustomer, getCustomerById,getCustomerByEmail, addCustomer, updateCustomer, deleteCustomerById, deleteAllCustomer,otpGeneratorbyemail } = require('./customer')
+const jwt = require('jsonwebtoken')
+const secretkey = 'shhh123'
+const { getAllCustomers, getCustomerById, getCustomerByEmail, addCustomer, updateCustomerById, deleteCustomerById, deleteAllCustomers,otpGeneratorbyemail } = require('./customer')
 // Route to get all customers
 const getAllCustomerRoute = async (request, response) => {
     try {
-        const result = await getAllCustomer();
+        const result = await getAllCustomers();
         console.log(result)
         response.send(result)
     }
@@ -40,6 +42,44 @@ const getCustomerByEmailRoute = async (request, response) => {
     }
 }
 
+// const getCustomerByEmailRoute = async (request, response) => {
+//     try {
+//         const { email } = request.params;
+//         //Check if email is there or not 
+//         if (!(email)) {
+//             response.status(400).send('Enter your email id')
+//         }
+//         //checking if email is present in backend
+//         const result = await getCustomerByEmail(email);
+       
+//         //creating token
+//         let token = null;
+//         if (result) {
+//             token = jwt.sign(
+//                 {
+//                     result_id: result._id,
+//                     email
+//                 },
+//                 secretkey,
+//                 {
+//                     expiresIn: '500s'
+//                 }, (error, token) => {
+//                     result.token = token;
+//                     response.json({
+//                         result
+//                     })
+//                 });
+
+//         }
+//         else {
+//             response.status(200).json("else part")
+//         }
+
+//     } catch {
+//         response.status(400).json({ error: 'Error while getting the token' })
+//     }
+// }
+
 // Route to add a new customer
 const addCustomerRoute = async (request, response) => {
     try {
@@ -56,12 +96,12 @@ const addCustomerRoute = async (request, response) => {
 }
 
 // Route to update a customer by ID
-const updateCustomerRoute = async (request, response) => {
+const updateCustomerByIdRoute = async (request, response) => {
     try {
         const { id } = request.params;
         const { fame, lname, phone, email, password, city, state, pincode } = request.body;
         console.log(id)
-        const result = await updateCustomer(id, fame, lname, phone, email, password, city, state, pincode);
+        const result = await updateCustomerById(id, fame, lname, phone, email, password, city, state, pincode);
         console.log(result)
         response.send(result)
     }
@@ -89,7 +129,7 @@ const deleteCustomerByIdRoute = async (request, response) => {
 // Route to delete all customers
 const deleteAllRoute = async (request, response) => {
     try {
-        const result = await deleteAllCustomer();
+        const result = await deleteAllCustomers();
         console.log(result)
         response.send(result)
     }
@@ -98,7 +138,7 @@ const deleteAllRoute = async (request, response) => {
         response.send(e)
     }
 }
-// Route to delete all customers
+
 const otpGeneratorbyemailRoute = async (request, response) => {
     try {
         const { email } = request.body;
@@ -112,14 +152,13 @@ const otpGeneratorbyemailRoute = async (request, response) => {
         response.send(e)
     }
 }
-
 // Exporting all the routes
 module.exports = {
     getAllCustomerRoute,
     getCustomerByIdRoute,
     getCustomerByEmailRoute,
     addCustomerRoute,
-    updateCustomerRoute,
+    updateCustomerByIdRoute,
     deleteCustomerByIdRoute,
     deleteAllRoute,
     otpGeneratorbyemailRoute

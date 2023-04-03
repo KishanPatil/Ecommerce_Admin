@@ -1,20 +1,23 @@
-const {productCategorymodel} = require("../../models/product/productCategorySchema");
-const {connectionDb,closeDb}=require("../../database/connection")
+/**
+ * @author Meghana Chavanke
+ */
+const { productCategorymodel } = require("../../models/product/productCategorySchema");
+const { connectionDb, closeDb } = require("../../database/connection")
 
 /**
  * @description Get all categories from the database
  * @returns {Array} An array of all product categories
  */
-const getAllCategory = async () => {
-      try{
-            await connectionDb()
-            const result = await productCategorymodel.find()
-            await closeDb()
-            return result
-          }
-      catch(e){
-        throw new Error(e)
-      }
+const getAllProductCategories = async () => {
+  try {
+    await connectionDb()
+    const result = await productCategorymodel.find()
+    await closeDb()
+    return result
+  }
+  catch (e) {
+    throw new Error(e)
+  }
 }
 
 /**
@@ -23,15 +26,15 @@ const getAllCategory = async () => {
  * @returns {object} The product category object matching the provided ID
  */
 const getProductCategoryById = async (id) => {
-    try{
-          await connectionDb()
-          const result = await productCategorymodel.findById(id)
-          await closeDb()
-          return result
-        }
-    catch(e){
-      throw new Error(e)
-    }
+  try {
+    await connectionDb()
+    const result = await productCategorymodel.findById(id)
+    await closeDb()
+    return result
+  }
+  catch (e) {
+    throw new Error(e)
+  }
 }
 
 /**
@@ -39,20 +42,20 @@ const getProductCategoryById = async (id) => {
  * @param {string} CategoryName - The name of the category to add
  * @returns {object} The newly created product category object
  */
-const addProductCategory= async (CategoryName,image) => {
-    try{
-        // connection
-          await connectionDb()
-          const result = await productCategorymodel.create({
-            CategoryName,image
-         });
-          await closeDb()
-          return result   
-        }
-    catch(e){
-      throw new Error(e)
-    }
+const addProductCategory = async (CategoryName, image) => {
+  try {
+    // connection
+    await connectionDb()
+    const result = await productCategorymodel.create({
+      CategoryName, image
+    });
+    await closeDb()
+    return result
   }
+  catch (e) {
+    throw new Error(e)
+  }
+}
 
 /**
  * @description Update a product category by its ID
@@ -60,56 +63,56 @@ const addProductCategory= async (CategoryName,image) => {
  * @param {string} newCategoryName - The new name to assign to the category
  * @returns {object} The updated product category object
  */
-const updateProductCategory= async (id,CategoryName,image) => {
-    try{
-        // connection
-          await connectionDb()
-          const result = await productCategorymodel.findByIdAndUpdate(id,{CategoryName:CategoryName,image:image});
-          await closeDb()
-          return result   
-        }
-    catch(e){
-      throw new Error(e)
-    }
+const updateProductCategoryById = async (id, CategoryName, image) => {
+  try {
+    // connection
+    await connectionDb()
+    const result = await productCategorymodel.findByIdAndUpdate(id, { CategoryName: CategoryName, image: image });
+    await closeDb()
+    return result
+  }
+  catch (e) {
+    throw new Error(e)
+  }
 }
-  
+
 /**
  * @description Delete a product category by its ID
  * @param {string} id - The ID of the category to delete
  * @returns {object} The deleted product category object
  */
-const deleteProductCategoryById= async (id) => {
-    try{
-        // connection
-          await connectionDb()
-          const result = await productCategorymodel.findByIdAndDelete(id);
-          await closeDb()
-          return result   
-        }
-    catch(e){
-      throw new Error(e)
-    }
+const deleteProductCategoryById = async (id) => {
+  try {
+    // connection
+    await connectionDb()
+    const result = await productCategorymodel.findByIdAndDelete(id);
+    await closeDb()
+    return result
+  }
+  catch (e) {
+    throw new Error(e)
+  }
 }
 
 /**
  * @description Delete all product categories from the database
  * @returns {object} The result of the delete operation
  */
-const deleteAllCategory= async () => {
-    try{
-        // connection
-          await connectionDb()
-        //   delete all categories
-          const result = await productCategorymodel.deleteMany();
-          await closeDb()
-          return result   
-        }
-    catch(e){
-      throw new Error(e)
-    }
+const deleteAllProductCategories = async () => {
+  try {
+    // connection
+    await connectionDb()
+    //   delete all categories
+    const result = await productCategorymodel.deleteMany();
+    await closeDb()
+    return result
+  }
+  catch (e) {
+    throw new Error(e)
+  }
 }
 
-const getCategoryByName = async (CategoryName) => {
+const getProductCategoryByName = async (CategoryName) => {
   try {
     await connectionDb();
     let query = {};
@@ -125,12 +128,12 @@ const getCategoryByName = async (CategoryName) => {
 };
 
 
-module.exports =  {
-    getAllCategory,
-    addProductCategory,
-    getProductCategoryById,
-    updateProductCategory,
-    deleteProductCategoryById,
-  deleteAllCategory,
-  getCategoryByName
+module.exports = {
+  getAllProductCategories,
+  addProductCategory,
+  getProductCategoryById,
+  updateProductCategoryById,
+  deleteProductCategoryById,
+  deleteAllProductCategories,
+  getProductCategoryByName
 }

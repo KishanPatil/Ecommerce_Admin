@@ -1,15 +1,15 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 // Importing the billingAddressmodel from billingAddressSchema file
-const {adminmodel} = require("../../models/Admin/adminSchema");
+const { adminmodel } = require("../../models/Admin/adminSchema");
 
 // Importing connectionDb and closeDb functions from connection file
-const {connectionDb,closeDb}=require("../../database/connection")
+const { connectionDb, closeDb } = require("../../database/connection")
 
 // Function to get all billing addresses
-const getAllAdmin = async () => {
-    try{
+const getAllAdmins = async () => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -22,7 +22,7 @@ const getAllAdmin = async () => {
         // Return the result
         return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
@@ -30,7 +30,7 @@ const getAllAdmin = async () => {
 
 // Function to get a billing address by id
 const getAdminById = async (id) => {
-    try{
+    try {
         // Connect to database
         await connectionDb()
 
@@ -43,59 +43,59 @@ const getAdminById = async (id) => {
         // Return the result
         return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to add a new billing address
-const createAdmin= async (fristname,lastname,phone,email,password,address) => {
-    try{
+const createAdmin = async (fristname, lastname, phone, email, password, address) => {
+    try {
         // Connect to database
         await connectionDb()
 
         // Create a new document in the billingAddressmodel collection with the given city, state and pincode
         const result = await adminmodel.create({
-            fristname,lastname,phone,email,password,address
+            fristname, lastname, phone, email, password, address
         });
 
         // Close the database connection
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to update an existing billing address
-const updateAdmin= async (id,fristname,lastname,phone,email,password,address) => {
-    try{
+const updateAdminById = async (id, fristname, lastname, phone, email, password, address) => {
+    try {
         // Connect to database
         await connectionDb()
 
         // Update the document with the given id in the billingAddressmodel collection with the new city, state and pincode
-        const result = await adminmodel.findByIdAndUpdate(id,{fristname:fristname,lastname:lastname,phone:phone,email:email,password:password,address:address});
+        const result = await adminmodel.findByIdAndUpdate(id, { fristname: fristname, lastname: lastname, phone: phone, email: email, password: password, address: address });
 
         // Close the database connection
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to delete a billing address by id
-const deleteAdminById= async (id) => {
-    try{
+const deleteAdminById = async (id) => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -106,17 +106,17 @@ const deleteAdminById= async (id) => {
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
+    catch (e) {
         // Throw an error if there is any problem with the database connection or query
         throw new Error(e)
     }
 }
 
 // Function to delete all billing addresses
-const deleteAllAdmin= async () => {
-    try{
+const deleteAllAdmins = async () => {
+    try {
         // Connect to database
         await connectionDb()
 
@@ -127,18 +127,18 @@ const deleteAllAdmin= async () => {
         await closeDb()
 
         // Return the result
-        return result   
+        return result
     }
-    catch(e){
-      throw new Error(e)
+    catch (e) {
+        throw new Error(e)
     }
-  }
+}
 
-  module.exports ={
-      getAllAdmin,
-      getAdminById,
-      createAdmin,
-      updateAdmin,
-      deleteAdminById,
-      deleteAllAdmin
-  }
+module.exports = {
+    getAllAdmins,
+    getAdminById,
+    createAdmin,
+    updateAdminById,
+    deleteAdminById,
+    deleteAllAdmins
+}

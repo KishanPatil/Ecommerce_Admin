@@ -1,3 +1,6 @@
+/**
+ * @author Meghana Chavanke
+ */
 const { productsmodel } = require("../../models/product/productsSchema");
 const mongoose = require("mongoose");
 const { ObjectId } = require('mongodb');
@@ -113,7 +116,7 @@ const addProduct = async (Name, Description, image, Quantity, Price, brand, cate
  * @param {*} id 
  * @returns 
  */
-const updateProduct = async (id, Name, Description, image, Quantity, Price, brand, category) => {
+const updateProductById = async (id, Name, Description, image, Quantity, Price, brand, category) => {
   try {
     // connection
     await connectionDb()
@@ -150,7 +153,7 @@ const deleteProductById = async (id) => {
  * @param {*} id 
  * @returns 
  */
-const deleteAll = async () => {
+const deleteAllProducts = async () => {
   try {
     // connection
     await connectionDb()
@@ -172,7 +175,7 @@ module.exports = {
   getProductByCategoryId,
   getProductByBrandId,
   addProduct,
-  updateProduct,
+  updateProductById,
   deleteProductById,
-  deleteAll
+  deleteAllProducts
 }

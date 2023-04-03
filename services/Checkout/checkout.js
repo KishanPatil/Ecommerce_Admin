@@ -1,5 +1,5 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 // Require necessary dependencies
 const {checkoutmodel} = require("../../models/Checkout/checkout");

@@ -1,24 +1,24 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
-const { getAllAdmin,
+const { getAllAdmins,
     getAdminById,
     createAdmin,
-    updateAdmin,
+    updateAdminById,
     deleteAdminById,
-    deleteAllAdmin} =require('./Admin')
+    deleteAllAdmins } = require('./Admin')
 
 /**
  * @description Get ALl  admin
  * @param {request} request 
  * @param {response} response 
- */const  getAllAdminRoute = async(request,response) => {
-    try{
-        const result=  await getAllAdmin();
+ */const getAllAdminsRoute = async (request, response) => {
+    try {
+        const result = await getAllAdmins();
         console.log(result)
         response.send(result)
     }
-    catch(e){
+    catch (e) {
         console.log(e);
         response.send(e)
     }
@@ -28,16 +28,16 @@ const { getAllAdmin,
  * @param {request} request 
  * @param {response} response 
  */
-const  getAdminByIdRoute = async(request,response) => {
-    try{
+const getAdminByIdRoute = async (request, response) => {
+    try {
         // Get the ID from the URL parameters
-        const {id}=request.params;
-        console.log({id})
-        const result=  await getAdminById(id);
+        const { id } = request.params;
+        console.log({ id })
+        const result = await getAdminById(id);
         console.log(result)
         response.send(result)
     }
-    catch(e){
+    catch (e) {
         console.log(e);
         response.send(e)
     }
@@ -47,16 +47,16 @@ const  getAdminByIdRoute = async(request,response) => {
  * @param {request} request 
  * @param {response} response 
  */
-const  createAdminRoute = async(request,response) => {
-    try{
-        const {fristname,lastname,phone,email,password,address}=request.body;
-        console.log({fristname,lastname,phone,email,password,address})
+const createAdminRoute = async (request, response) => {
+    try {
+        const { fristname, lastname, phone, email, password, address } = request.body;
+        console.log({ fristname, lastname, phone, email, password, address })
         // Add the new document with the provided data
-        const result=  await createAdmin(fristname,lastname,phone,email,password,address);
+        const result = await createAdmin(fristname, lastname, phone, email, password, address);
         console.log(result)
         response.send(result)
     }
-    catch(e){
+    catch (e) {
         console.log(e);
         response.send(e)
     }
@@ -66,18 +66,18 @@ const  createAdminRoute = async(request,response) => {
  * @param {request} request 
  * @param {response} response 
  */
-const  updateAdminRoute = async(request,response) => {
-    try{
-        const {id}=request.params;
-        const {city,state,pincode}=request.body;
+const updateAdminByIdRoute = async (request, response) => {
+    try {
+        const { id } = request.params;
+        const { city, state, pincode } = request.body;
         console.log(id)
-        console.log(city,state,pincode)
+        console.log(city, state, pincode)
         // Update the document with the provided data
-        const result=  await updateAdmin(id,city,state,pincode);
+        const result = await updateAdminById(id, city, state, pincode);
         console.log(result)
         response.send(result)
     }
-    catch(e){
+    catch (e) {
         console.log(e);
         response.send(e)
     }
@@ -87,16 +87,16 @@ const  updateAdminRoute = async(request,response) => {
  * @param {request} request 
  * @param {response} response 
  */
-const  deleteAdminByIdRoute = async(request,response) => {
-    try{
-        const {id}=request.params;
+const deleteAdminByIdRoute = async (request, response) => {
+    try {
+        const { id } = request.params;
         console.log(id)
         // Delete the document with the specified ID
-        const result=  await deleteAdminById(id);
+        const result = await deleteAdminById(id);
         console.log(result)
         response.send(result)
     }
-    catch(e){
+    catch (e) {
         console.log(e);
         response.send(e)
     }
@@ -106,25 +106,25 @@ const  deleteAdminByIdRoute = async(request,response) => {
  * @param {request} request 
  * @param {response} response 
  */
-const  deleteAllAdminRoute = async(request,response) => {
-    try{
+const deleteAllAdminsRoute = async (request, response) => {
+    try {
         // Delete all documents in the collection
-        const result=  await deleteAllAdmin();
+        const result = await deleteAllAdmins();
         console.log(result)
         response.send(result)
     }
-    catch(e){
+    catch (e) {
         console.log(e);
         response.send(e)
     }
 }
 
 // Export all the Express.js routes as an object
-module.exports={
-    getAllAdminRoute,
+module.exports = {
+    getAllAdminsRoute,
     getAdminByIdRoute,
     createAdminRoute,
-    updateAdminRoute,
+    updateAdminByIdRoute,
     deleteAdminByIdRoute,
-    deleteAllAdminRoute
+    deleteAllAdminsRoute
 }

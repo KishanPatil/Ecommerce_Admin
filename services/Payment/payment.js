@@ -1,3 +1,6 @@
+/**
+ * @author Meghana Chavanke
+ */
 const { paymentsmodel } = require("../../models/Payment/Payment");
 const { connectionDb, closeDb } = require("../../database/connection");
 
@@ -25,7 +28,7 @@ const getPaymentById = async (id) => {
  * @param {*} id 
  * @returns payment object
  */
-const getAllPayment = async (id) => {
+const getAllPayments = async (id) => {
     try {
         // connect to database
         await connectionDb();
@@ -72,7 +75,7 @@ const createPayment = async (Amount, Method, productId,paymentStatus,customerId)
  * @param {*} Method 
  * @returns updated payment object
  */
-const updatePayment = async (id, paymentStatus) => {
+const updatePaymentById = async (id, paymentStatus) => {
     try {
         // connect to database
         await connectionDb();
@@ -93,7 +96,7 @@ const updatePayment = async (id, paymentStatus) => {
 
  * @returns delete payment object
  */
-const deletePayment = async (id) => {
+const deletePaymentById = async (id) => {
     try {
         // connect to database
         await connectionDb();
@@ -109,8 +112,8 @@ const deletePayment = async (id) => {
 
 module.exports = {
     getPaymentById,
-    updatePayment,
+    updatePaymentById,
     createPayment,
-    getAllPayment,
-    deletePayment
+    getAllPayments,
+    deletePaymentById
 }

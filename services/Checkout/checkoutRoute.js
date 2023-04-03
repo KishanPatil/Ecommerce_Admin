@@ -1,5 +1,5 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 // Import necessary functions from checkout.js
 const {getCheckoutById,addCheckout} =require('./checkout')

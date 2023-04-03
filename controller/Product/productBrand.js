@@ -1,33 +1,33 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 const express = require('express');
 var router = express.Router();
-const service = require('../../services/Product/productBrandRoute')
+const brandService = require('../../services/Product/productBrandRoute')
 /**
  * Route to Get all Products brand.
  * HTTP Method: GET
  */
-router.get("/getAllBrands", service.getAllBrandProductsRoute);
+router.get("/brands", brandService.getAllBrandProductsRoute);
 
 /**
  * Route to get Products Brand by ID
  * HTTP Method: GET
  * @param {string} id - The ID of the Brand item.
  */
-router.get("/getBrandById/:id", service.getBrandProductByIdRoute);
+router.get("/brands/:id", brandService.getBrandProductByIdRoute);
 /**
  * Route to Add a Brand item.
  * HTTP Method: Post
  */
-router.post("/addBrand", service.addProductBrandRoute);
+router.post("/brands", brandService.addProductBrandRoute);
 
 /**
  * Route to update a  product brand by ID
  * HTTP Method: PUT
  * @param {string} id - The ID of the product brand item to update.
  */
-router.put("/updateBrand/:id", service.updateProductBrandRoute);
+router.put("/brands/:id", brandService.updateProductBrandRoute);
 
 /**
  * @description delete Product brand by Id
@@ -37,11 +37,11 @@ router.put("/updateBrand/:id", service.updateProductBrandRoute);
  * HTTP Method: Delete
  * @param {string} id - The ID of the Product brand item to Delete.
  */
-router.delete("/deleteBrand/:id", service.deleteProductBrandByIdRoute);
+router.delete("/brands/:id", brandService.deleteProductBrandByIdRoute);
 /**
  * Route to delete all Product brand 
  * HTTP Method: DELETE
  */
-router.delete("/deleteAllBrand", service.deleteAllBrandRoute);
+router.delete("/brands", brandService.deleteAllProductBrandsRoute);
 
 module.exports = router

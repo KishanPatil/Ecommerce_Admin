@@ -1,22 +1,22 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 const express = require('express');
 var router = express.Router();
-const service = require('../../services/Checkout/checkoutRoute')
+const checkoutService = require('../../services/Checkout/checkoutRoute')
 
 
 /**
  * Route to Get cheout by id.
  * HTTP Method: GET
  */
-router.get("/getcheckoutbyid/:id", service.getCheckoutByIdRoute);
+router.get("/checkout/:id", checkoutService.getCheckoutByIdRoute);
 
 /**
 * Route to add checkout by ID.
 * HTTP Method: Post
 * @param {string} id - The ID of the cheout item.
  */
-router.post("/addcheckout/:id", service.addCheckoutRoute);
+router.post("/checkout/:id", checkoutService.addCheckoutRoute);
 
 module.exports = router;

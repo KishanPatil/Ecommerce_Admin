@@ -46,6 +46,7 @@ const customerSchema=new mongoose.Schema({
     },
     password:{
         type:String,
+        unique:true,
         require : true,
     },
     city:{
@@ -59,10 +60,13 @@ const customerSchema=new mongoose.Schema({
     pincode:{
         type:String,
         require : true,
-    },  
+    },
     otp:{
         type:String  
-    }  
+    },
+    token:{
+        type:String
+    } 
 },
 {
     timestamps: true})

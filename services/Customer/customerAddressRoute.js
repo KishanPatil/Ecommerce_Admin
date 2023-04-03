@@ -1,13 +1,13 @@
 /**
- * @author Kishan Patil
+ * @author Meghana Chavanke
  */
 // Importing functions from the customerAddress module
-const {getAllAddress,getAddressById,addAddress,updateAddress,deleteAddressById,deleteAllAddress} =require('./customerAddress')
+const {getAllAddresses,getAddressById,addAddress,updateAddressById,deleteAddressById,deleteAllAddresses} =require('./customerAddress')
 
 // Route for getting all addresses
 const  getAllAddressRoute = async(request,response) => {
     try{
-        const result=  await getAllAddress();
+        const result=  await getAllAddresses();
         console.log(result)
         response.send(result)
     }
@@ -51,7 +51,7 @@ const  addAddressRoute = async(request,response) => {
 }
 
 // Route for updating an existing address
-const  updateAddressRoute = async(request,response) => {
+const  updateAddressByIdRoute = async(request,response) => {
     try{
         // Get the ID and data from the request parameters and body
         const {id}=request.params;
@@ -59,7 +59,7 @@ const  updateAddressRoute = async(request,response) => {
         console.log(id)
         console.log(city,state,pincode)
         // Update the address
-        const result=  await updateAddress(id,city,state,pincode);
+        const result=  await updateAddressById(id,city,state,pincode);
         console.log(result)
         response.send(result)
     }
@@ -90,7 +90,7 @@ const  deleteAddressByIdRoute = async(request,response) => {
 const  deleteAllAddressRoute = async(request,response) => {
     try{
         // Delete all addresses
-        const result=  await deleteAllAddress();
+        const result=  await deleteAllAddresses();
         console.log(result)
         response.send(result)
     }
@@ -105,7 +105,7 @@ module.exports={
     getAllAddressRoute,
     getAddressByIdRoute,
     addAddressRoute,
-    updateAddressRoute,
+    updateAddressByIdRoute,
     deleteAddressByIdRoute,
     deleteAllAddressRoute
 }

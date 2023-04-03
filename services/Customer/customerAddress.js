@@ -1,12 +1,12 @@
 /**
- * @author Kishan Patil
+ * @author  Meghana Chavanke
  */
-const {customerAddressmodel} = require("../../models/Customer/customerAddressSchema");
-const {connectionDb,closeDb}=require("../../database/connection")
+const { customerAddressmodel } = require("../../models/Customer/customerAddressSchema");
+const { connectionDb, closeDb } = require("../../database/connection")
 
 // Get all customer addresses
-const getAllAddress = async () => {
-  try{
+const getAllAddresses = async () => {
+  try {
     // Establish database connection
     await connectionDb()
     // Find all addresses
@@ -15,14 +15,14 @@ const getAllAddress = async () => {
     await closeDb()
     return result
   }
-  catch(e){
+  catch (e) {
     throw new Error(e)
   }
 }
 
 // Get a customer address by ID
 const getAddressById = async (id) => {
-  try{
+  try {
     // Establish database connection
     await connectionDb()
     // Find address by ID
@@ -31,14 +31,14 @@ const getAddressById = async (id) => {
     await closeDb()
     return result
   }
-  catch(e){
+  catch (e) {
     throw new Error(e)
   }
 }
 
 // Add a customer address
-const addAddress= async (city,state,pincode) => {
-  try{
+const addAddress = async (city, state, pincode) => {
+  try {
     // Establish database connection
     await connectionDb()
     // Create new address document
@@ -49,67 +49,67 @@ const addAddress= async (city,state,pincode) => {
     });
     // Close database connection
     await closeDb()
-    return result   
+    return result
   }
-  catch(e){
+  catch (e) {
     throw new Error(e)
   }
 }
 
 // Update a customer address by ID
-const updateAddress= async (id,city,state,pincode) => {
-  try{
+const updateAddressById = async (id, city, state, pincode) => {
+  try {
     // Establish database connection
     await connectionDb()
     // Find and update address by ID
-    const result = await customerAddressmodel.findByIdAndUpdate(id,{city:city,state:state,pincode:pincode});
+    const result = await customerAddressmodel.findByIdAndUpdate(id, { city: city, state: state, pincode: pincode });
     // Close database connection
     await closeDb()
-    return result   
+    return result
   }
-  catch(e){
+  catch (e) {
     throw new Error(e)
   }
 }
 
 // Delete a customer address by ID
-const deleteAddressById= async (id) => {
-  try{
+const deleteAddressById = async (id) => {
+  try {
     // Establish database connection
     await connectionDb()
     // Find and delete address by ID
     const result = await customerAddressmodel.findByIdAndDelete(id);
     // Close database connection
     await closeDb()
-    return result   
+    return result
   }
-  catch(e){
+  catch (e) {
     throw new Error(e)
   }
 }
 
 // Delete all customer addresses
-const deleteAllAddress= async () => {
-  try{
+const deleteAllAddresses = async () => {
+  try {
     // Establish database connection
     await connectionDb()
     // Delete all addresses
     const result = await customerAddressmodel.deleteMany();
     // Close database connection
     await closeDb()
-    return result   
+    return result
   }
-  catch(e){
+  catch (e) {
     throw new Error(e)
   }
 }
 
 // Export functions
-module.exports ={
-  getAllAddress,
+module.exports = {
+  getAllAddresses,
   getAddressById,
   addAddress,
-  updateAddress,
+  updateAddressById,
   deleteAddressById,
-  deleteAllAddress
+  deleteAllAddresses
 }

@@ -1,42 +1,50 @@
 /**
- * @author Kishan Patil
+ * @fileOverview Admin routes
+ * @author Meghana Chavanke
+ * @exports router
  */
+
 const express = require('express');
-var router = express.Router();
-const service = require('../../services/Admin/AdminRoute') 
-/**
- * Route to Get all admin
- * HTTP Method: GET
- */
-router.get("/getAllAdmin", service.getAllAdminRoute);
-/**
- * Route to Get a admin by ID.
- * HTTP Method: GET
- * @param {string} id - The ID of the Address item.
- */
-router.get("/getAdminById/:id", service.getAdminByIdRoute);
-/**
- * Route to Add a new admin
- * HTTP Method: POST
- */
-router.post("/createAdmin", service.createAdminRoute);
-/**
- * Route to update a admin item.
- * HTTP Method: PUT
- * @param {string} id - The ID of the admin item to update.
- */
-router.put("/updateAdmin/:id", service.updateAdminRoute);
+const router = express.Router();
+const adminService = require('../../services/Admin/AdminRoute');
 
 /**
- * Route to Delete a Billing item.
- * HTTP Method: Delete
- * @param {string} id - The ID of the admin item to Delete.
+ * Route to get all admins
+ * HTTP Method: GET
  */
-router.delete("/deleteAdmin/:id", service.deleteAdminByIdRoute);
+router.get('/admins', adminService.getAllAdminsRoute);
+
 /**
- * Route to delete all admin items.
+ * Route to get an admin by ID
+ * HTTP Method: GET
+ * @param {string} id - The ID of the admin to retrieve
+ */
+router.get('/admins/:id', adminService.getAdminByIdRoute);
+
+/**
+ * Route to create a new admin
+ * HTTP Method: POST
+ */
+router.post('/admins', adminService.createAdminRoute);
+
+/**
+ * Route to update an existing admin
+ * HTTP Method: PUT
+ * @param {string} id - The ID of the admin to update
+ */
+router.put('/admins/:id', adminService.updateAdminByIdRoute);
+
+/**
+ * Route to delete an admin by ID
+ * HTTP Method: DELETE
+ * @param {string} id - The ID of the admin to delete
+ */
+router.delete('/admins/:id', adminService.deleteAdminByIdRoute);
+
+/**
+ * Route to delete all admins
  * HTTP Method: DELETE
  */
-router.delete("/deleteAllAdmin", service.deleteAllAdminRoute);
+router.delete('/admins', adminService.deleteAllAdminsRoute);
 
 module.exports = router;

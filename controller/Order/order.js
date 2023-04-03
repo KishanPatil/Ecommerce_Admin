@@ -1,32 +1,39 @@
+/**
+ * @author Meghana Chavanke
+ */
 const express = require('express');
 var router = express.Router();
-const service = require('../../services/Order/orderRoute')
+const orderService = require('../../services/Order/orderRoute')
 // const service = require('../../services/Product/product')
 /**
  * @description get all order list by get method
  */
-router.get("/getallorder", service.getAllOrderRoute);
+router.get("/orders", orderService.getAllOrderRoute);
 /**
  * @description get order list by get method
  */
-router.get("/getorderbyid/:id", service.getOrderByIdRoute);
+router.get("/orders/:id", orderService.getOrderByIdRoute);
 /**
  * @description add order
  */
-router.post("/addorder", service.addOrderRoute);
+router.post("/orders", orderService.addOrderRoute);
+
+router.get("/getordersbycustomerid/:customerid", orderService.getOrderByCustomerIdRoute)
 /**
  * @description update order
  */
-router.put("/updateorder/:id", service.updateOrderRoute);
+router.put("/orders/:id", orderService.updateOrderRoute);
 /**
  * @description delete order
  */
-router.delete("/deleteorderbyid/:id", service.deleteOrderByIdRoute);
+router.delete("/orders/:id", orderService.deleteOrderByIdRoute);
+
+
 /**
  * @description delete all order
  */
-router.delete("/deleteallorder", service.deleteAllRoute);
+router.delete("/orders", orderService.deleteAllRoute);
 
-router.get("/getorderbycustomerid/:customerid", service.getOrderByCustomerIdRoute)
+
 
 module.exports = router;
