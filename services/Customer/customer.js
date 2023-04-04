@@ -218,7 +218,7 @@ const otpGeneratorbyemail = async (email) => {
     { email: email },
     { otp: otp, otpCreatedAt: otpCreatedAt }
   );
-
+  
   // Schedule removal of OTP after 5 minutes
   const fiveMinutes = 5 * 60 * 1000;
   setTimeout(async () => {
