@@ -17,7 +17,7 @@ router.get("/customers", customerService.getAllCustomerRoute);
  * Route to Get a customer by Email.
  * HTTP Method: GET
  */
-router.get("/customers/:email", customerService.getCustomerByEmailRoute);
+router.get("/email", customerService.getCustomerByEmailRoute);
 
 /**
  * Route to Get a customer by ID.
@@ -58,7 +58,5 @@ router.delete("/customers/:id", customerService.deleteCustomerByIdRoute);
  * HTTP Method: DELETE
  */
 router.delete("/customers", customerService.deleteAllRoute);
-
-router.post("/otpgenerate", customerService.otpGeneratorbyemailRoute);
 
 module.exports = router;

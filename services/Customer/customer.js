@@ -150,149 +150,26 @@ const deleteAllCustomers = async () => {
   }
 }
 
-const getCustomerByEmail = async (email) => {
+const getCustomerByEmail = async (email, password) => {
   try {
     await connectionDb();
-    const result = await customermodel.findOne({ email: email })
-    // close database connection
-    await closeDb()
-    return result
-  }
-  catch (e) { console.log(e) }
-}
-const otpGeneratorbyemail = async (email) => {
-  const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
-  console.log("otp =", otp);
-
-  // Update OTP and creation time in database
-  const otpCreatedAt = new Date();
-  await connectionDb();
-  await customermodel.updateOne(
-    { email: email },
-    { otp: otp, otpCreatedAt: otpCreatedAt }
-  );
-
-  // Schedule removal of OTP after 5 minutes
-  const fiveMinutes = 5 * 60 * 1000;
-  setTimeout(async () => {
-    await connectionDb();
-    await customermodel.updateOne({ email: email }, { $unset: { otp: "", otpCreatedAt: "" } });
-    console.log("OTP removed");
-  }, fiveMinutes);
-
-  // Send OTP to the user's email
-  const transporter = nodemailer.createTransport({
-    host: "10.0.40.4",
-    port: 587,
-    auth: {
-      user: 'Kishan.Patil@harbingergroup.com',
-      pass: 'H@rb!ng3R@GR'
+    const result = await customermodel.findOne({ email , password })
+    if(result === null){
+      return  {isValid : false , error : 'Invalid Email or Password'}
     }
-  });
-  const mailOptions = {
-    from: 'Kishan.Patil@harbingergroup.com',
-    to: email,
-    subject: 'Login OTP',
-    text: `Your OTP for login is ${otp}`
-  };
-
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log("errr",error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-}
-
-// const EmailJSUserID = 'harbinger403@gmail.com';
-// emailjs.server.connect({ user: EmailJSUserID });
-
-// const otpGeneratorbyemail = async (email) => {
-//   const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
-//   console.log("otp =", otp);
-
-//   // Update OTP and creation time in database
-//   const otpCreatedAt = new Date();
-//   await connectionDb();
-//   await customermodel.updateOne(
-//     { email: email },
-//     { otp: otp, otpCreatedAt: otpCreatedAt }
-//   );
-  
-//   // Schedule removal of OTP after 5 minutes
-//   const fiveMinutes = 5 * 60 * 1000;
-//   setTimeout(async () => {
-//     await connectionDb();
-//     await customermodel.updateOne({ email: email }, { $unset: { otp: "", otpCreatedAt: "" } });
-//     console.log("OTP removed");
-//   }, fiveMinutes);
-
-//   // Send OTP to the user's email
-//   const templateParams = {
-//     to_name: email,
-//     message: `Your OTP for login is ${otp}`
-//   };
-
-//   emailjs.send('harbinger403@gmail.com', 'template_lh64bi6', templateParams)
-//     .then(function(response) {
-//       console.log('SUCCESS!', response.status, response.text);
-//     }, function(error) {
-//       console.log('FAILED. ..', error);
-//     });
-// };
-
-
-const otpGeneratorbyMobile = async (phoneNumber) => {
-  const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
-  console.log("otp =", otp);
-
-  // Update OTP and creation time in database
-  const otpCreatedAt = new Date();
-  await connectionDb();
-  await customermodel.updateOne(
-    { phoneNumber: phoneNumber },
-    { otp: otp, otpCreatedAt: otpCreatedAt }
-  );
-
-  // Schedule removal of OTP after 5 minutes
-  const fiveMinutes = 5 * 60 * 1000;
-  setTimeout(async () => {
-    await connectionDb();
-    await customermodel.updateOne({ phoneNumber: phoneNumber }, { $unset: { otp: "", otpCreatedAt: "" } });
-    console.log("OTP removed");
-  }, fiveMinutes);
-
-  // Send OTP via text message
-  client.messages
-    .create({
-      body: `Your OTP for login is ${otp}`,
-      
-      from: 'your_twilio_phone_number',
-      to: phoneNumber
-    })
-    .then(message => console.log(message.sid))
-    .catch(error => console.log(error));
-};
-
-const verifyOtpAndPassword = async (email, otp, password) => {
-  try {
-    await connectionDb();
-    const result = await customermodel.findOne({ email: email, otp: otp, password: password })
     // close database connection
     await closeDb()
 
-    if (result) {
-      return { success: true };
-    } else {
-      return { error: 'Invalid OTP or password' };
-    }
-  } catch (error) {
-    console.log(error);
-    
+    let otp = Math.floor(Math.random() * 10000)
+
+    otp = otp < 1000 ? otp + 1000 : otp
+
+    return {isValid : true , otp : otp , data : result}
+  }
+  catch (e) {
+    return {isValid : false , error : e.message || e}
   }
 }
-
 //exporting functions
 module.exports = {
   getAllCustomers,
@@ -301,6 +178,5 @@ module.exports = {
   addCustomer,
   updateCustomerById,
   deleteCustomerById,
-  deleteAllCustomers,
-  otpGeneratorbyemail
+  deleteAllCustomers
 }

@@ -36,12 +36,13 @@ const getCustomerByIdRoute = async (request, response) => {
 
 const getCustomerByEmailRoute = async (request, response) => {
     try {
-        const { email } = request.params;
-        const result = await getCustomerByEmail(email);
+        const { email , password } = request.query;
+        console.log('...')
+        const result = await getCustomerByEmail(email, password);
         response.status(200).json(result)
     }
-    catch {
-        response.status(400).json({ error: 'Error while getting the customer by mail' })
+    catch(e){
+        response.status(400).json(e)
     }
 }
 
@@ -141,20 +142,6 @@ const deleteAllRoute = async (request, response) => {
         response.send(e)
     }
 }
-
-const otpGeneratorbyemailRoute = async (request, response) => {
-    try {
-        const { email } = request.body;
-        console.log(email)
-        const result = await otpGeneratorbyemail(email);
-        console.log("this is route ",result)
-        response.send(result)
-    }
-    catch (e) {
-        console.log(e);
-        response.send(e)
-    }
-}
 // Exporting all the routes
 module.exports = {
     getAllCustomerRoute,
@@ -164,5 +151,4 @@ module.exports = {
     updateCustomerByIdRoute,
     deleteCustomerByIdRoute,
     deleteAllRoute,
-    otpGeneratorbyemailRoute
 }
