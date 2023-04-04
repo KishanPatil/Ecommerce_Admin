@@ -182,7 +182,7 @@ const otpGeneratorbyemail = async (email) => {
 
   // Send OTP to the user's email
   const transporter = nodemailer.createTransport({
-    host: "gmail",
+    host: "10.0.40.4",
     port: 587,
     auth: {
       user: 'Kishan.Patil@harbingergroup.com',
@@ -241,6 +241,38 @@ const otpGeneratorbyemail = async (email) => {
 //       console.log('FAILED...', error);
 //     });
 // };
+
+
+const otpGeneratorbyMobile = async (phoneNumber) => {
+  const otp = otpGenerator.generate(6, { digits: true, upperCase: false, specialChars: false });
+  console.log("otp =", otp);
+
+  // Update OTP and creation time in database
+  const otpCreatedAt = new Date();
+  await connectionDb();
+  await customermodel.updateOne(
+    { phoneNumber: phoneNumber },
+    { otp: otp, otpCreatedAt: otpCreatedAt }
+  );
+
+  // Schedule removal of OTP after 5 minutes
+  const fiveMinutes = 5 * 60 * 1000;
+  setTimeout(async () => {
+    await connectionDb();
+    await customermodel.updateOne({ phoneNumber: phoneNumber }, { $unset: { otp: "", otpCreatedAt: "" } });
+    console.log("OTP removed");
+  }, fiveMinutes);
+
+  // Send OTP via text message
+  client.messages
+    .create({
+      body: `Your OTP for login is ${otp}`,
+      from: 'your_twilio_phone_number',
+      to: phoneNumber
+    })
+    .then(message => console.log(message.sid))
+    .catch(error => console.log(error));
+};
 
 const verifyOtpAndPassword = async (email, otp, password) => {
   try {
