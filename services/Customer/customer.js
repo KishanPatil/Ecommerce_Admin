@@ -238,7 +238,7 @@ const otpGeneratorbyemail = async (email) => {
 //     .then(function(response) {
 //       console.log('SUCCESS!', response.status, response.text);
 //     }, function(error) {
-//       console.log('FAILED...', error);
+//       console.log('FAILED. ..', error);
 //     });
 // };
 
