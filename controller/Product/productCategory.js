@@ -23,7 +23,7 @@ router.get("/categories/:CategoryName", categoryService.getProductCategoryByName
  * HTTP Method: GET
  * @param {string} id - The ID of the Category item.
  */
-router.get("/categories/:id", categoryService.getProductCategoryByIdRoute);
+router.get("/getcategoriesbyid/:id", categoryService.getProductCategoryByIdRoute);
 /**
  * Route to Add a category
  * HTTP Method: POST
