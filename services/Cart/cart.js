@@ -189,7 +189,7 @@ const removeProductFromCart = async (customerId, productId) => {
       { customerId },
       { $pull: { products: { productid: productId } } },
       { new: true }
-    );
+    ).populate('products.productid').populate('customerId')
     await closeDb();
     return result;
   } catch (e) {
