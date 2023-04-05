@@ -1,11 +1,13 @@
+const { paymentsmodel } = require("../../models/Payment/Payment");
+const { connectionDb, closeDb } = require("../../database/connection");
+const {} = require("../Order/order")
+const stripe = require("stripe")('sk_test_51MrHZkSBXFZ8OGxdMftdBF6RH6mczqENBQddufgTNKcMkS1sW2WLHIzmGoRBMAg2swVcrydaTCImYAgYk0H3XUdO00Z6Yg4kxe');
 /**
  * @author Kishan Patil
  * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
  * @author Pradeep Prajapati 
  */
-const { paymentsmodel } = require("../../models/Payment/Payment");
-const { connectionDb, closeDb } = require("../../database/connection");
 
 /**
  * @description Get payment by id
@@ -111,6 +113,14 @@ const deletePaymentById = async (id) => {
     } catch (e) {
         throw new Error(e);
     }
+}
+
+//Payment gateway
+const calculateAmmount = (orderTotal) =>{
+ // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  
 }
 
 module.exports = {

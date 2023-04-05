@@ -1,3 +1,9 @@
+// This is your test secret API key.
+
+
+// app.use(express.static("public"));
+
+
 /**
  * @description Product controller
  */ 
