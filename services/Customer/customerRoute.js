@@ -5,7 +5,8 @@
  * @author Pradeep Prajapati 
  */
 const jwt = require('jsonwebtoken')
-const secretkey = 'shhh123'
+// const secretkey = 'shhh123'
+const config = require("../../config")
 const { getAllCustomers, getCustomerById, getCustomerByEmail, addCustomer, updateCustomerById, deleteCustomerById, deleteAllCustomers,otpGeneratorbyemail } = require('./customer')
 // Route to get all customers
 const getAllCustomerRoute = async (request, response) => {
@@ -39,7 +40,16 @@ const getCustomerByEmailRoute = async (request, response) => {
         const { email , password } = request.query;
         console.log('...')
         const result = await getCustomerByEmail(email, password);
-        response.status(200).json(result)
+        jwt.sign({
+            result_id: result._id,
+            email
+        }, 
+        config.secretkey, {expiresIn:'1h'}, (error, token) => {
+            result.token = token;
+            // response.json({result});
+            response.json(result)
+        })
+        // response.status(200).json(result)
     }
     catch(e){
         response.status(400).json(e)
