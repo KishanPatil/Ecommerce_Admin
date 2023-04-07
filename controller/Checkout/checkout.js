@@ -1,12 +1,12 @@
+const express = require('express');
+var router = express.Router();
+const checkoutService = require('../../services/Checkout/checkoutRoute')
 /**
  * @author Kishan Patil
  * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
  * @author Pradeep Prajapati 
  */
-const express = require('express');
-var router = express.Router();
-const checkoutService = require('../../services/Checkout/checkoutRoute')
 
 
 /**
@@ -22,4 +22,9 @@ router.get("/checkout/:id", checkoutService.getCheckoutByIdRoute);
  */
 router.post("/checkout/:id", checkoutService.addCheckoutRoute);
 
+
+
+//new
+router.get('/', checkoutService.findAllCheckouts)
+router.post('/', checkoutService.checkOutByCart)
 module.exports = router;

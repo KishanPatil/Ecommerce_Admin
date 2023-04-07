@@ -2,6 +2,7 @@ const { paymentsmodel } = require("../../models/Payment/Payment");
 const { connectionDb, closeDb } = require("../../database/connection");
 const {} = require("../Order/order")
 const stripe = require("stripe")('sk_test_51MrHZkSBXFZ8OGxdMftdBF6RH6mczqENBQddufgTNKcMkS1sW2WLHIzmGoRBMAg2swVcrydaTCImYAgYk0H3XUdO00Z6Yg4kxe');
+const { Order } = require('../../models/Order/order')
 /**
  * @author Kishan Patil
  * @author Rajeshwari Kulkarni
@@ -116,14 +117,41 @@ const deletePaymentById = async (id) => {
 }
 
 //Payment gateway
-const calculateAmmount = (orderTotal) =>{
- // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  
-}
+//const stripe = require("stripe")('sk_test_51Mt6nxSGE2olbbFYgKKY8VJMv075vMdJgBgRPIaz7Fr57WeofcGZvR2iwayFsP0nmuweJkIGKkY1hYU5WLLtHVGR00UclZ9Ozc');
 
+const calculateTotal = (products) => {
+    let total = 0
+
+    products.forEach(product => {
+        total += Number(product.quantity * product.productId.price)
+    })
+
+    return total
+}
+const addPayment = async (order) => {
+    try {
+        //get the input
+        const currentOrder = await Order.findById(order).populate("products.productId")
+        const total = calculateTotal(currentOrder.products)
+        const result = await Payment.create({ order, amount: total })
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: total * 100,
+            currency: "inr",
+            automatic_payment_methods: {
+                enabled: true,
+            },
+        });
+        //return result
+        console.info('payment method created successfully')
+        return { clientSecret: paymentIntent.client_secret }
+    } catch (err) {
+        //error case
+        console.log(err)
+        throw new Error(err)
+    }
+}
 module.exports = {
+    addPayment,
     getPaymentById,
     updatePaymentById,
     createPayment,

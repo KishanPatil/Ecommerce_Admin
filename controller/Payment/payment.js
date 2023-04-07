@@ -31,5 +31,6 @@ router.put("/payments/:id", paymentService.updatePaymentByIdRoute);
  */
 router.delete("/payments/:id", paymentService.deletePaymentByIdRoute);
 
-
+//new
+router.post('/', paymentService.addPaymentRoute)
 module.exports = router

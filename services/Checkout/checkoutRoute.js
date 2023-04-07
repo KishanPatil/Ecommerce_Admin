@@ -1,3 +1,5 @@
+const {getCheckoutById,addCheckout} =require('./checkout')
+const checkoutService = require('../../services/Checkout/checkout')
 /**
  * @author Kishan Patil
  * @author Rajeshwari Kulkarni
@@ -5,7 +7,6 @@
  * @author Pradeep Prajapati 
  */
 // Import necessary functions from checkout.js
-const {getCheckoutById,addCheckout} =require('./checkout')
 
 // Define a route to get a checkout object by ID
 const getCheckoutByIdRoute = async(request,response) => {
@@ -58,9 +59,40 @@ const addCheckoutRoute = async(request,response) => {
         response.send(e)
     }
 }
+//new
+
+const findAllCheckouts = async (req, res) => {
+    try {
+        // find all checkout 
+        const result = await checkoutService.findAllCheckouts()
+        // return the response
+        res.status(200).json(result)
+    } catch (err) {
+        // error case 
+        res.status(400).json({ error: `Failed to fetch all checkouts : ${err.message}` })
+    }
+}
+
+const checkOutByCart = async (req, res) => {
+    try {
+        // 
+        const { order, payment, status } = req.body
+        // find all checkout 
+        const result = await checkoutService.checkOutByCart(order, payment, status)
+        // return the response
+        res.status(200).json(result)
+    } catch (err) {
+        // error case 
+        res.status(400).json({ error: `Failed to fetch all checkout : ${err.message}` })
+    }
+}
+
+
 
 // Export the two routes as properties of an object
 module.exports = {
     getCheckoutByIdRoute,
-    addCheckoutRoute
+    addCheckoutRoute,
+    checkOutByCart,
+    findAllCheckouts
 } 

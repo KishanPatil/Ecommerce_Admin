@@ -1,14 +1,18 @@
+const mongoose = require("mongoose"); 
 /**
  * @author Kishan Patil
  * @author Rajeshwari Kulkarni
  * @author Meghana Chavanke
  * @author Pradeep Prajapati 
  */
-const mongoose = require("mongoose"); 
 const checkoutSchema=new mongoose.Schema({
     cart:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Cart'
+    },
+    order:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'order'
     }
 },
 {

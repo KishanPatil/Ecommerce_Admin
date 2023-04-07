@@ -59,9 +59,34 @@ const addCheckout= async (id) => {
     throw new Error(e)
   }
 }
+//new 
+const findAllCheckouts = async () => {
+  try {
+      // checkout by product
+      const result = await CheckOut.find({}).populate('order')
+      // return the result
+      return result
+  } catch (error) {
+      throw new Error(error)
+  }
+}
 
+const checkOutByCart = async (order, payment, status) => {
+  try {
+      // creating a checkout object
+      const result = await CheckOut.create({ order, payment, status })
+      // return the result
+      console.log("")
+      return result
+  } catch (error) {
+      console.log("")
+      throw new Error(error)
+  }
+}
 // Export the two functions as properties of an object
 module.exports =  {
   getCheckoutById,
-  addCheckout
+  addCheckout,
+  checkOutByCart,
+  findAllCheckouts
 } 

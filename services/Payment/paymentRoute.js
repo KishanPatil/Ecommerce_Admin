@@ -10,7 +10,8 @@ const {
     updatePaymentById,
     createPayment,
     getAllPayments,
-    deletePaymentById
+    deletePaymentById,
+    addPayment
 } = require('./payment');
 
 // Route to get payment information by ID
@@ -114,8 +115,25 @@ const deletePaymentByIdRoute = async (request, response) => {
         response.send(e);
     }
 }
+//new
+const addPaymentRoute = async (req, res) => {
+    try {
+        const {order} = req.body
+        //find all the products
+        const result = await addPayment(order);
+        //return the response
+        console.log("")
+        res.status(200).json(result);
+    }
+    catch (err) {
+        //error case
+        console.log("")
+        res.status(400).json({ error: `Failed to create  payment : ${err}` })
+    }
+}
 // Exporting the payment routes for use in other files
 module.exports = {
+    addPaymentRoute,
     getPaymentByIdRoute,
     createPaymentRoute,
     updatePaymentByIdRoute,
