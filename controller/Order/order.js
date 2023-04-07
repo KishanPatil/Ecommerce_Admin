@@ -7,6 +7,8 @@
 const express = require('express');
 var router = express.Router();
 const orderService = require('../../services/Order/orderRoute')
+const verifyToken = require('../../JWTfiles/auth')
+
 // const service = require('../../services/Product/product')
 /**
  * @description get all order list by get method
@@ -21,11 +23,11 @@ router.get("/orders/:id", orderService.getOrderByIdRoute);
  */
 router.post("/orders", orderService.addOrderRoute);
 
-router.get("/getordersbycustomerid/:customerid", orderService.getOrderByCustomerIdRoute)
+router.get("/getordersbycustomerid/:customerid",verifyToken, orderService.getOrderByCustomerIdRoute)
 /**
  * @description update order
  */
-router.put("/orders/:id", orderService.updateOrderRoute);
+router.put("/orders/:id", verifyToken, orderService.updateOrderRoute);
 /**
  * @description delete order
  */

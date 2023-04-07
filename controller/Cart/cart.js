@@ -8,6 +8,8 @@ const express = require('express');
 var router = express.Router();
 const cartservice = require('../../services/Cart/cartRoute');
 
+const verifyToken = require('../../JWTfiles/auth')
+
 /**
  * Route to get all Cart items.
  * HTTP Method: GET
@@ -61,7 +63,7 @@ router.delete("/cart", cartservice.deleteAllCartRoute);
  * HTTP Method: GET
  * @param {string} id - The ID of the Cart item.
  */
-router.get("/getcartbycustomerid/:id", cartservice.getCartByCustomerIdRoute);
+router.get("/getcartbycustomerid/:id",verifyToken, cartservice.getCartByCustomerIdRoute);
 
 /**
  * Route to get a Cart item by customer ID.
