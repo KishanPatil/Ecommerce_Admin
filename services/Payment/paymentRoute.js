@@ -118,16 +118,16 @@ const deletePaymentByIdRoute = async (request, response) => {
 //new
 const addPaymentRoute = async (req, res) => {
     try {
-        const {order} = req.body
+        const {cartid, total} = req.body
         //find all the products
-        const result = await addPayment(order);
+        const result = await addPayment(cartid, total);
         //return the response
-        console.log("")
+        console.log('cart id in route for add payment route' , cartid)
         res.status(200).json(result);
     }
     catch (err) {
         //error case
-        console.log("")
+        console.log(`Failed to create  payment : ${err}`)
         res.status(400).json({ error: `Failed to create  payment : ${err}` })
     }
 }

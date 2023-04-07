@@ -165,7 +165,7 @@ const getCartByCustomerIdRoute = async (request, response) => {
 const removeProductFromCartRoute = async (request, response) => {
     try {
         const { customerId, productid } = request.params;
-        console.log(customerId, productid)
+        console.log("romove product from cart customer id and product",customerId, productid)
         const result = await removeProductFromCart(customerId, productid);
         console.log(result)
         response.send(result)

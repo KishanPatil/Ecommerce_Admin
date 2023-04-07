@@ -3,6 +3,7 @@ const { connectionDb, closeDb } = require("../../database/connection");
 const {} = require("../Order/order")
 const stripe = require("stripe")('sk_test_51MrHZkSBXFZ8OGxdMftdBF6RH6mczqENBQddufgTNKcMkS1sW2WLHIzmGoRBMAg2swVcrydaTCImYAgYk0H3XUdO00Z6Yg4kxe');
 const { Order } = require('../../models/Order/order')
+const { cartmodel } = require('../../models/Cart/cartSchema')
 /**
  * @author Kishan Patil
  * @author Rajeshwari Kulkarni
@@ -128,12 +129,14 @@ const calculateTotal = (products) => {
 
     return total
 }
-const addPayment = async (order) => {
+const addPayment = async (cartid, total) => {
     try {
+        await connectionDb()
         //get the input
-        const currentOrder = await Order.findById(order).populate("products.productId")
-        const total = calculateTotal(currentOrder.products)
-        const result = await Payment.create({ order, amount: total })
+        console.log('payment ====> ', cartid)
+        const currentOrder = await cartmodel.findById(cartid).populate("products")
+        // const total = calculateTotal(currentOrder.products)
+        // const result = await Payment.create({ order, amount: total })
         const paymentIntent = await stripe.paymentIntents.create({
             amount: total * 100,
             currency: "inr",
@@ -141,6 +144,7 @@ const addPayment = async (order) => {
                 enabled: true,
             },
         });
+        await closeDb()
         //return result
         console.info('payment method created successfully')
         return { clientSecret: paymentIntent.client_secret }
@@ -149,7 +153,7 @@ const addPayment = async (order) => {
         console.log(err)
         throw new Error(err)
     }
-}
+}   
 module.exports = {
     addPayment,
     getPaymentById,
