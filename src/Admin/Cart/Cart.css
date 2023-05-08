@@ -1,0 +1,27 @@
+/* .truncate {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 5em;
+  }
+  
+  .copy {
+    cursor: pointer;
+    
+  }
+  
+  .trash-icon-hover {
+    font-size: 120%;
+    transition: font-size 0.3s ease-in-out;
+  }
+
+  .trash-icon-hover:hover {
+    font-size: 175%;
+    transform: translateY(-3px);
+  }
+  
+
+  .tooltip .tooltip-inner {
+    color: red;
+  } */

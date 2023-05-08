@@ -1,0 +1,55 @@
+/* .container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .btn {
+    margin-right: 10px;
+  }
+  
+  #linkAdd{
+    margin-left: 12%;
+  } */
+  .img{
+    height: 30%;
+    width: 30%;
+  }
+  
+  thead{
+    background-color: #AFAFAF;
+  }
+  .customer-body{
+    font-size: 0.9rem;;
+  }
+
+  .truncate-desc {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 11em;
+    height: 3em;
+    /* margin-left: 40px; */
+
+  }
+  
+  .copy-discription {
+    cursor: pointer;
+    width: 30%;
+    /* margin-left: 0.5em; */
+  }
+  
+  .trash-icon-hover {
+    font-size: 100%;
+    transition: font-size 0.3s ease-in-out;
+  }
+
+  .trash-icon-hover:hover {
+    font-size: 125%;
+    transform: translateY(-3px);
+  }
+  
+  /* Change the color of the tooltip text to red */
+  .tooltip .tooltip-inner {
+    color: red;
+  }

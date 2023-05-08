@@ -1,0 +1,27 @@
+.truncate {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 5em;
+  }
+  
+  .copy {
+    cursor: pointer;
+    /* margin-left: 0.5em; */
+  }
+  
+  .trash-icon-hover {
+    font-size: 100%;
+    transition: font-size 0.3s ease-in-out;
+  }
+
+  .trash-icon-hover:hover {
+    font-size: 125%;
+    transform: translateY(-3px);
+  }
+  
+  /* Change the color of the tooltip text to red */
+  .tooltip .tooltip-inner {
+    color: red;
+  }
